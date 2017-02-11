@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Template • TodoMVC</title>
+    <link rel="stylesheet" href="node_modules/todomvc-common/base.css">
+    <link rel="stylesheet" href="node_modules/todomvc-app-css/index.css">
+</head>
+<!-- 使用模块和控制器 -->
+
+<body ng-app="todoApp" ng-controller="todoCtrl">
+    <section ng-view></section>
+    <footer class="info">
+        <p>Double-click to edit a todo</p>
+        <p>Created by <a href="http://todomvc.com">itcast</a></p>
+        <p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+    </footer>
+    <!-- 1. 引包 -->
+    <script src="node_modules/angular/angular.js"></script>
+    <script src="node_modules/angular-route/angular-route.js"></script>
+    <script src='js/app.js'></script>
+    <script src="js/controller.js"></script>
+    <script src="js/service.js"></script>
+</body>
+
+</html>

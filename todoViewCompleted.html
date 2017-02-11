@@ -1,0 +1,58 @@
+<section class="todoapp">
+        <header class="header">
+            <h1>todos</h1>
+            <!-- 这里嵌套表单的原因是为了，按下回车的时候自动提交表单数据 -->
+            <!-- form中的action一定为赋值为#目的是为了防止页面跳转 -->
+            <!-- ng-submit指令一定是添加到form上的，如果添加到input上，是没有效果的 -->
+            <form ng-submit = 'add()' >
+            <!-- ng-model是一个数据双向绑定的指令，这里绑定ng-modle是为了，获取输入的内容 -->
+            <!-- 因为ng-model是一个双向绑定数据的指令，我们能改变，就同样可以获取到 -->
+                <input class="new-todo" placeholder="What needs to be done?" autofocus  ng-model = 'addName'>
+            <!-- 我们将这里获取到数据，添加到todoList这个数组中，在遍历将数组中的内容展示到显示列表上 -->
+            </form>
+        </header>
+        <section class="main">
+            <input class="toggle-all" type="checkbox" ng-click='selectorAll()' ng-model = 'isSelectorAll'>
+            <label for="toggle-all">Mark all as complete</label>
+            <ul class="todo-list">
+            <!-- 这里的ng-class是为了，我们点击选中的时候，加上complete这个类名 ，-->
+            <!--  ng-class='{completed:vaule.isCompleted}'这个表达式可以解释为，如果vaule.isCompleted的值为true的时候，completed这个类名就会作用到当前标签上，反之则不作用到当前标签上-->
+            <!-- 这里说明一下ng-class的用法：ng-class = {'类名1':表达式1,'类名2':表达式2....} 如果表达式的值为true对应的类名生效，反之类名不生效，可以有多个类名和表达式，表达式和类名是一一对应的，多个类名和表达式之间用逗号隔开-->
+            <!-- 这里的'editing':vaule. isUpdata这里的类名主要是，控制编辑框是否被显示 -->
+                <li ng-class="{'completed':vaule.isCompleted,'editing':vaule. isUpdata}" ng-repeat = 'vaule in todoList | filter:{isCompleted:true} track by $index' ng-dblclick = 'upData()'>
+                <!-- 这里的vaule in todoList | filter:status是要满足过滤条件后才输出的status就是过滤条件 -->
+                    <div class="view">
+                        <!-- 这里ng-model的值vaule.isCompleted其实是获取了todoList中每一项的状态 -->
+                        <input class="toggle" type="checkbox"  ng-model = 'vaule.isCompleted'>
+                        <!-- 在复选框中，绑定ng-model，是可以动态改变复选框的选中或未被选中的状态的 -->
+                        <!-- <input type="checkbox" name="" id="" ng-model = 'vaule'> -->
+                        <label>{{vaule.name}}</label>
+                        <!-- {{vaulename}}就是列表项的主要内容 -->
+                        <!-- lable的作用是为了显示我们添加的列表的， -->
+                        <!-- remove(vaule.id)的作用是为了点击删除按钮的时候，根据id删除对应列表 -->
+                        <button class="destroy" ng-click="remove(vaule.id)"></button>
+                    </div>
+                    <!-- 这里也要用表单元素嵌套一下，添加一个方法，让我们编辑结束后，回车，隐藏编辑框 -->
+                  <form action="#" ng-submit = 'saveData()'>
+                        <input class="edit" value="Create a TodoMVC template" ng-model='vaule.name'>
+                  </form>
+                </li>
+            </ul>
+        </section>
+        <footer class="footer">
+            <!-- ng-band用来绑定计数器，当计数器发生改变的时候，动态显示到页面上 -->
+            <span class="todo-count"><strong ng-bind="count"></strong>item left</span>
+            <ul class="filters">
+                <li>
+                    <a class="selected" href="#/">All</a>
+                </li>
+                <li>
+                    <a href="#/active">Active</a>
+                </li>
+                <li>
+                    <a href="#/completed">Completed</a>
+                </li>
+            </ul>
+            <button class="clear-completed" ng-click='clearAll()'>Clear completed</button>
+        </footer>
+    </section>

@@ -1,0 +1,50 @@
+<section class="todoapp">
+        <header class="header">
+            <h1>todos</h1>
+            <!-- 这里嵌套表单的原因是为了，按下回车的时候自动提交表单数据 -->
+            <!-- form中的action一定为赋值为#目的是为了防止页面跳转 -->
+            <!-- ng-submit指令一定是添加到form上的，如果添加到input上，是没有效果的 -->
+            <form  ng-submit = 'add()' action="#">
+            <!-- ng-model是一个数据双向绑定的指令，这里绑定ng-modle是为了，获取输入的内容 -->
+            <!-- 因为ng-model是一个双向绑定数据的指令，我们能改变，就同样可以获取到 -->
+                <input class="new-todo" placeholder="What needs to be done?" autofocus  ng-model = 'addName'>
+            <!-- 我们将这里获取到数据，添加到todoList这个数组中，在遍历将数组中的内容展示到显示列表上 -->
+            </form>
+        </header>
+        <section class="main">
+            <input class="toggle-all" type="checkbox" ng-click='selectorAll()' ng-model = 'isSelectorAll'>
+            <label for="toggle-all">Mark all as complete</label>
+            <ul class="todo-list">
+                <li ng-class="{'completed':vaule.isCompleted,'editing':vaule. isUpdata}" ng-repeat = 'vaule in todoList | filter:status track by $index' ng-dblclick = 'upData()'>
+                    <div class="view">
+                        <input class="toggle" type="checkbox"  ng-model = 'vaule.isCompleted'>
+                        <label>{{vaule.name}}</label>
+                        <!-- {{vaulename}}就是列表项的主要内容 -->
+                        <!-- lable的作用是为了显示我们添加的列表的， -->
+                        <!-- remove(vaule.id)的作用是为了点击删除按钮的时候，根据id删除对应列表 -->
+                        <button class="destroy" ng-click="remove(vaule.id)"></button>
+                    </div>
+                    <!-- 这里也要用表单元素嵌套一下，添加一个方法，让我们编辑结束后，回车，隐藏编辑框 -->
+                  <form action="#" ng-submit = 'saveData()'>
+                        <input class="edit" value="Create a TodoMVC template" ng-model='vaule.name'>
+                  </form>
+                </li>
+            </ul>
+        </section>
+        <footer class="footer">
+            <!-- ng-band用来绑定计数器，当计数器发生改变的时候，动态显示到页面上 -->
+            <span class="todo-count"><strong ng-bind="count"></strong>item left</span>
+            <ul class="filters">
+                <li>
+                    <a class="selected" href="#/">All</a>
+                </li>
+                <li>
+                    <a href="#/active">Active</a>
+                </li>
+                <li>
+                    <a href="#/completed">Completed</a>
+                </li>
+            </ul>
+            <button class="clear-completed" ng-click='clearAll()'>Clear completed</button>
+        </footer>
+    </section>
